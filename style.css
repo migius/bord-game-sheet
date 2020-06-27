@@ -1,3 +1,4 @@
-#game-box {
-    border: 1px solid blue;
+#preview-box {
+    box-shadow: black 0px 0px 11px 2px;
+    padding: 10px;
 }
