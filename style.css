@@ -7,3 +7,78 @@
 #code {
     margin-bottom: 50px;
 }
+
+.game-box {
+    background-color: #fdece2;
+    margin: 2em;
+    padding: 1em;
+    width: 100%;
+    max-width: 400px;
+    background: linear-gradient(90deg, rgba(253,236,226,1) 0%, rgba(253,236,226,1) 6%, rgba(241,155,122,1) 6%, rgba(241,155,122,1) 15%, rgba(253,236,226,1) 15%, rgba(253,236,226,1) 100%);
+}
+
+.icon {
+    display: inline-block;
+    width: 20%;
+    height: 55px;
+    background-repeat: no-repeat;
+    margin-right: -35px;
+    margin-left: 5px;
+    clear: left;
+    float: left;
+    z-index: 20;    
+    position: relative;
+}
+
+.label {
+    display: inline-block;    
+    width: 77%;
+    background-color: #fff;
+    padding: 10px 2px 2px 15px;
+    margin: 10px 2px 10px 0px;
+    min-height: 28px;
+    clear: none;    
+    text-align: justify;
+}
+
+.icon.img-designer {
+    background-image: url(img/Autore.svg);
+}
+
+.icon.img-artist {
+    background-image: url(img/Illustrazioni.svg);
+}
+
+.icon.img-publisher {
+    background-image: url(img/Editore.svg);
+}
+
+.icon.img-player-count {
+    background-image: url(img/Giocatori.svg);
+}
+
+.icon.img-length {
+    background-image: url(img/Durata.svg);
+}
+
+.icon.img-age {
+    background-image: url(img/Eta.svg);
+}
+
+.icon.img-price {
+    background-image: url(img/Prezzo.svg);
+}
+
+.top {
+    background-image: url(img/Logo.svg);
+    height: 100px;
+    background-repeat: no-repeat;
+    margin-left: -15px;
+}
+
+.name {
+    height: 85px;
+    padding: 36px 2px 2px 80px;
+    text-transform: uppercase;    
+    font-size: 1.4em;
+}

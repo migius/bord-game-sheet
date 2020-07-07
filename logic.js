@@ -43,42 +43,46 @@ function updateGioco(data)
     datiGioco = JSON.parse(json_datiGioco).items.item;
 
     if(datiGioco.name["@value"] !== undefined)
-        document.getElementById("name").innerText = datiGioco.name["@value"];
+        document.getElementsByClassName("name")[0].innerText = datiGioco.name["@value"];
     else
-        document.getElementById("name").innerText = datiGioco.name.filter(function(n){ return n["@type"] == "primary"; })[0]["@value"];
-
+        document.getElementsByClassName("name")[0].innerText = datiGioco.name.filter(function(n){ return n["@type"] == "primary"; })[0]["@value"];
+/*
     if(datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).length > 1)
-        document.getElementById("designer").innerText = "Autori: ";
+        document.getElementsByClassName("designer")[0].innerText = "Autori: ";
     else
-        document.getElementById("designer").innerText = "Autore: ";
+        document.getElementsByClassName("designer")[0].innerText = "Autore: ";*/
 
-    document.getElementById("designer").innerText += " " + datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).map(function(c){return c["@value"];}).join(", ");
-
+    document.getElementsByClassName("designer")[0].innerText = " " + datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).map(function(c){return c["@value"];}).join(", ");
+/*
     if(datiGioco.link.filter(function(link){return link["@type"] === "boardgameartist";}).length > 1)
-        document.getElementById("artist").innerText = "Illustratori: ";
+        document.getElementsByClassName("artist")[0].innerText = "Illustratori: ";
     else
-        document.getElementById("artist").innerText = "Illustratore: ";
+        document.getElementsByClassName("artist")[0].innerText = "Illustratore: ";*/
 
-    document.getElementById("artist").innerText += " " + datiGioco.link.filter(function(link){return link["@type"] === "boardgameartist";}).map(function(c){return c["@value"];}).join(", ");
-
+    document.getElementsByClassName("artist")[0].innerText = " " + datiGioco.link.filter(function(link){return link["@type"] === "boardgameartist";}).map(function(c){return c["@value"];}).join(", ");
+/*
     if(datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).length > 1)
-        document.getElementById("publisher").innerText = "Editori: ";
+        document.getElementsByClassName("publisher")[0].innerText = "Editori: ";
     else
-        document.getElementById("publisher").innerText = "Editore: ";
+        document.getElementsByClassName("publisher")[0].innerText = "Editore: ";*/
 
-    document.getElementById("publisher").innerText += " " + datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).map(function(c){return c["@value"];}).join(", ");
+    document.getElementsByClassName("publisher")[0].innerText = " " + datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).map(function(c){return c["@value"];}).join(", ");
 
-    document.getElementById("player-count").innerText = datiGioco.minplayers["@value"];
+    document.getElementsByClassName("player-count")[0].innerText = datiGioco.minplayers["@value"];
 
     if(datiGioco.maxplayers["@value"] !== datiGioco.minplayers["@value"])
-        document.getElementById("player-count").innerText += "-" + datiGioco.maxplayers["@value"];
+        document.getElementsByClassName("player-count")[0].innerText += "-" + datiGioco.maxplayers["@value"];
 
-    document.getElementById("length").innerText = datiGioco.minplaytime["@value"];
+    document.getElementsByClassName("player-count")[0].innerText += " giocatori";
+
+    document.getElementsByClassName("length")[0].innerText = datiGioco.minplaytime["@value"];
 
     if(datiGioco.maxplaytime["@value"] !== datiGioco.minplaytime["@value"])
-        document.getElementById("length").innerText += "-" + datiGioco.maxplaytime["@value"];
+        document.getElementsByClassName("length")[0].innerText += "-" + datiGioco.maxplaytime["@value"];
 
-    document.getElementById("age").innerText = datiGioco.minage["@value"] + "+";
+    document.getElementsByClassName("length")[0].innerText += " minuti";
+
+    document.getElementsByClassName("age")[0].innerText = datiGioco.minage["@value"] + "+";
 /*
     <h3 id=name>Nome gioco</h3>
     <p>Autore: <span id=designer>Xxxxx Yyyyy</span></p>
@@ -221,7 +225,7 @@ function nodeToString ( node ) {
 }
 
 function ValorizzaCode() {
-    var escapedStr = nodeToString(document.getElementById("game-box"));//.replace( "<" , "&lt;" ).replace( ">" , "&gt;");
+    var escapedStr = nodeToString(document.getElementsByClassName("game-box")[0]);//.replace( "<" , "&lt;" ).replace( ">" , "&gt;");
     document.getElementById("code").value = escapedStr;
 }
 
