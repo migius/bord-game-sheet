@@ -15,6 +15,7 @@
     width: 100%;
     max-width: 400px;
     background: linear-gradient(90deg, rgba(253,236,226,1) 0%, rgba(253,236,226,1) 6%, rgba(241,155,122,1) 6%, rgba(241,155,122,1) 15%, rgba(253,236,226,1) 15%, rgba(253,236,226,1) 100%);
+    font-family: sans-serif;
 }
 
 .icon {
