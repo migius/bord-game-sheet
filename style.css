@@ -31,13 +31,13 @@
 }
 
 .label {
-    display: inline-block;    
+    display: inline-block;
     width: 77%;
     background-color: #fff;
-    padding: 10px 2px 2px 15px;
+    padding: 10px 10px 10px 15px;
     margin: 10px 2px 10px 0px;
-    min-height: 28px;
-    clear: none;    
+    min-height: 20px;
+    clear: none;
     text-align: justify;
 }
 
