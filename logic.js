@@ -94,6 +94,7 @@ function infoInRiga(data)
 
     stringa += datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).map(function(c){return c["@value"];}).join(", ");
 
+    return stringa;
 }
 
 function updateGioco(data)
