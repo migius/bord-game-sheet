@@ -37,6 +37,65 @@ function loadGioco(id) {
     xhrDetail.send();
 }
 
+function infoInRiga(data)
+{
+    //es. Autori: Isaac Childres | Artisti: Alexandr Elichev, Josh T. McDowell, Alvaro Nebot | Giocatori: 1-4 | Durata: 60-120′ | Età: 14+ | Editore: Asmodee Italia
+ 
+    stringa = "";
+
+    if(datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).length > 1)
+        stringa += "Autori: ";
+    else
+        stringa += "Autore: ";
+
+    stringa += datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).map(function(c){return c["@value"];}).join(", ");
+
+
+
+    stringa += " | ";
+
+    if(datiGioco.link.filter(function(link){return link["@type"] === "boardgameartist";}).length > 1)
+        stringa += "Artisti: ";
+    else
+        stringa += "Artista: ";
+
+    stringa += datiGioco.link.filter(function(link){return link["@type"] === "boardgameartist";}).map(function(c){return c["@value"];}).join(", ");
+
+
+    stringa += " | ";
+    stringa += "Giocatori: ";
+    stringa += datiGioco.minplayers["@value"];
+
+    if(datiGioco.maxplayers["@value"] !== datiGioco.minplayers["@value"])
+        stringa += "-" + datiGioco.maxplayers["@value"];
+
+
+    stringa += " | ";
+    stringa += "Durata: ";
+    stringa += datiGioco.minplaytime["@value"] + "'";
+
+    if(datiGioco.maxplaytime["@value"] !== datiGioco.minplaytime["@value"])
+        stringa += "-" + datiGioco.maxplaytime["@value"] + "'";
+    
+
+
+    stringa += " | ";
+    stringa += "Età: ";
+
+    stringa += datiGioco.minage["@value"] + "+";
+
+
+    stringa += " | ";
+
+    if(datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).length > 1)
+        stringa += "Editori: ";
+    else
+        stringa += "Editore: ";
+
+    stringa += datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).map(function(c){return c["@value"];}).join(", ");
+
+}
+
 function updateGioco(data)
 {
     json_datiGioco = xml2json(data).replace("undefined","");    
@@ -83,6 +142,12 @@ function updateGioco(data)
     document.getElementsByClassName("length")[0].innerText += " minuti";
 
     document.getElementsByClassName("age")[0].innerText = datiGioco.minage["@value"] + "+";
+
+
+    document.getElementsByClassName("info-text")[0].innerText = infoInRiga(data);
+    
+
+
 /*
     <h3 id=name>Nome gioco</h3>
     <p>Autore: <span id=designer>Xxxxx Yyyyy</span></p>
