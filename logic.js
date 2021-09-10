@@ -97,18 +97,18 @@ function infoInRiga(datiGioco)
     return stringa;
 }
 
-function getURL(datiGioco)
+function getURL(datiGioco, gameName)
 {
-    stringa = "<a href=https://boardgamegeek.com/boardgame/" + datiGioco["@id"] +  " target=_blank>" + datiGioco.name["@value"] + "</a>";
+    stringa = "<a href=https://boardgamegeek.com/boardgame/" + datiGioco["@id"] +  " target=_blank>" + gameName + "</a>";
  
     return stringa;
 }
 
 function getImage(datiGioco)
 {
-    stringa = "<img href='" + datiGioco["thumbnail"] + "' />";
+    stringa = "<img src='" + datiGioco["thumbnail"] + "' />";
 
-    stringa += "<img href='" + datiGioco["image"] + "' />";
+    stringa += "<img src='" + datiGioco["image"] + "' />";
  
     return stringa;
 }
@@ -120,10 +120,14 @@ function updateGioco(data)
     json_datiGioco = xml2json(data).replace("undefined","");    
     datiGioco = JSON.parse(json_datiGioco).items.item;
 
+    let gameName = "";
+
     if(datiGioco.name["@value"] !== undefined)
-        document.getElementsByClassName("name")[0].innerText = datiGioco.name["@value"];
+        gameName = datiGioco.name["@value"];
     else
-        document.getElementsByClassName("name")[0].innerText = datiGioco.name.filter(function(n){ return n["@type"] == "primary"; })[0]["@value"];
+        gameName = datiGioco.name.filter(function(n){ return n["@type"] == "primary"; })[0]["@value"];
+
+    document.getElementsByClassName("name")[0].innerText = gameName;
 /*
     if(datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).length > 1)
         document.getElementsByClassName("designer")[0].innerText = "Autori: ";
@@ -165,7 +169,7 @@ function updateGioco(data)
 
     document.getElementsByClassName("info-text")[0].innerText = infoInRiga(datiGioco);
     
-    document.getElementsByClassName("game-url")[0].innerHTML = getURL(datiGioco);
+    document.getElementsByClassName("game-url")[0].innerHTML = getURL(datiGioco, gameName);
     document.getElementsByClassName("game-img")[0].innerHTML = getImage(datiGioco);
 
 
