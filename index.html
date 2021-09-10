@@ -1,48 +1,65 @@
 
 <link rel="stylesheet" href="style.css?v=0" />
 
-<h1>Game sheet generator</h1>
+<div id="main">
+    <h1>Game sheet generator</h1>
 
-<label for="selectGioco">Gioco:</label><br/>
-    <i><small>Inserisci il nome (o una parte di almeno 3 lettere) del gioco</small></i><br/>
-<input type="text" id="giocoColl" name="giocoColl" placeholder="Nome gioco" onfocusout="loadGiochi()"/><br/>
-<br/>
-    <i><small>Seleziona il gioco da questa lista</small></i><br/>
-<select id="selectGioco" name="selectGioco" onchange="GiocoSelezionato()" ></select>
+    <label for="selectGioco">Gioco:</label><br/>
+        <i><small>Inserisci il nome (o una parte di almeno 3 lettere) del gioco</small></i><br/>
+    <input type="text" id="giocoColl" name="giocoColl" placeholder="Nome gioco" onfocusout="loadGiochi()"/><br/>
+    <br/>
+        <i><small>Seleziona il gioco da questa lista</small></i><br/>
+    <select id="selectGioco" name="selectGioco" onchange="GiocoSelezionato()" ></select>
 
-<h2>Info in riga</h2>
-<div class="info-text"></div>
+    <h2>Info in riga</h2>
+    <div class="info-text">{{infoInRiga}}</div>
 
-<h2>Link al gioco</h2>
-<div class="game-url"></div>
+    <h2>Puoi personalizzare le info qua</h2>
+    <form>
+        Nome: <input type="text" v-model="gameName" /><br/>
+        Autore: <input type="text" v-model="designerJoin" /><br/>
+        Artista: <input type="text" v-model="artistJoin" /><br/>
+        Minimo giocatori: <input type="number" v-model="minplayers" /><br/>
+        Massimo giocatori: <input type="number" v-model="maxplayers" /><br/>
+        Minimo durata: <input type="number" v-model="minplaytime" /><br/>
+        Massimo durata: <input type="number" v-model="maxplaytime" /><br/>
+        Minimo età: <input type="number" v-model="minage" /><br/>
+        Editore: <input type="text" v-model="publisherJoin" /><br/>
+        Prezzo: <input type="text" v-model="price" />
+    </form>
 
-<h2>Immagini</h2>
-<div class="game-img"></div>
+    <h2>Link al gioco</h2>
+    <div class="game-url"></div>
 
-<h2>Anteprima</h2>
-<div class="preview-box">
-    <div class="game-box">
-        <div class="top"><div class="name"        >Nome gioco</div></div>
-        <div class="icon img-designer"    ></div><div class="label designer"    >Xxxxx Yyyyy</div>
-        <div class="icon img-artist"      ></div><div class="label artist"      >Xxxxx Yyyyy</div>
-        <div class="icon img-publisher"   ></div><div class="label publisher"   >Zzzzzzz</div>
-        <div class="icon img-player-count"></div><div class="label player-count">2-4</div>
-        <div class="icon img-length"      ></div><div class="label length"      >30-60</div>
-        <div class="icon img-age"         ></div><div class="label age"         >10+</div>
-        <div class="icon img-price"       ></div><div class="label price"       >[da valorizzare] €</div>
-        <div class="bottop"></div>
+    <h2>Immagini</h2>
+    <div class="game-img"></div>
+
+    <h2>Anteprima</h2>
+    <div class="preview-box">
+        <div class="game-box">
+            <div class="top"><div class="name"        >{{gameName}}</div></div>
+            <div class="icon img-designer"    ></div><div class="label designer"    >{{designerJoin}}</div>
+            <div class="icon img-artist"      ></div><div class="label artist"      >{{artistJoin}}</div>
+            <div class="icon img-publisher"   ></div><div class="label publisher"   >{{publisherJoin}}</div>
+            <div class="icon img-player-count"></div><div class="label player-count">{{players}}</div>
+            <div class="icon img-length"      ></div><div class="label length"      >{{playtime}}</div>
+            <div class="icon img-age"         ></div><div class="label age"         >{{minage}}+</div>
+            <div class="icon img-price"       ></div><div class="label price"       >{{price}}</div>
+            <div class="bottop"></div>
+        </div>
     </div>
+
+
+    <h2>Codice da copiare</h2>
+    <textarea name="code" id=code  type=text onClick="this.select();" cols="120" rows="15"></textarea>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="json2xml.js?v=0" ></script>
+    <script src="xml2json.js?v=0" ></script>
+    <script src="logic.js?v=0" ></script>
+
 </div>
-
-
-<h2>Codice da copiare</h2>
-<textarea name="code" id=code  type=text onClick="this.select();" cols="120" rows="15"></textarea>
-
-<script src="json2xml.js?v=0" ></script>
-<script src="xml2json.js?v=0" ></script>
-<script src="logic.js?v=0" ></script>
-
-
 
 
 <footer style="background-color:#ccc;position: fixed;padding: 10px 10px 10px 10px;width: 100%;left: 0px;bottom: 0px;z-index:100">

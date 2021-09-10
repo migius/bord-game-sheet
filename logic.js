@@ -13,7 +13,7 @@ xhrDetail.onload = function () {
         console.log("success!", xhrDetail);
         //parser = new DOMParser();
         //xmlDoc = parser.parseFromString(xhr.responseXml,"text/xml");
-        updateGioco(xhrDetail.responseXML);
+        main.updateGioco(xhrDetail.responseXML);
     } else {
         // What do when the request fails
         console.log("The request failed!");
@@ -37,6 +37,7 @@ function loadGioco(id) {
     xhrDetail.send();
 }
 
+/*
 function infoInRiga(datiGioco)
 {
     //es. Autori: Isaac Childres | Artisti: Alexandr Elichev, Josh T. McDowell, Alvaro Nebot | Giocatori: 1-4 | Durata: 60-120′ | Età: 14+ | Editore: Asmodee Italia
@@ -96,10 +97,11 @@ function infoInRiga(datiGioco)
 
     return stringa;
 }
+*/
 
-function getURL(datiGioco, gameName)
+function getURL(datiGioco)
 {
-    stringa = "<a href=https://boardgamegeek.com/boardgame/" + datiGioco["@id"] +  " target=_blank>" + gameName + "</a>";
+    stringa = "<a href=https://boardgamegeek.com/boardgame/" + datiGioco["@id"] +  " target=_blank>" + main.gameName + "</a>";
  
     return stringa;
 }
@@ -112,84 +114,150 @@ function getImage(datiGioco)
  
     return stringa;
 }
-
-
-
-function updateGioco(data)
-{
-    json_datiGioco = xml2json(data).replace("undefined","");    
-    datiGioco = JSON.parse(json_datiGioco).items.item;
-
-    let gameName = "";
-
-    if(datiGioco.name["@value"] !== undefined)
-        gameName = datiGioco.name["@value"];
-    else
-        gameName = datiGioco.name.filter(function(n){ return n["@type"] == "primary"; })[0]["@value"];
-
-    document.getElementsByClassName("name")[0].innerText = gameName;
-/*
-    if(datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).length > 1)
-        document.getElementsByClassName("designer")[0].innerText = "Autori: ";
-    else
-        document.getElementsByClassName("designer")[0].innerText = "Autore: ";*/
-
-    document.getElementsByClassName("designer")[0].innerText = " " + datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).map(function(c){return c["@value"];}).join(", ");
-/*
-    if(datiGioco.link.filter(function(link){return link["@type"] === "boardgameartist";}).length > 1)
-        document.getElementsByClassName("artist")[0].innerText = "Illustratori: ";
-    else
-        document.getElementsByClassName("artist")[0].innerText = "Illustratore: ";*/
-
-    document.getElementsByClassName("artist")[0].innerText = " " + datiGioco.link.filter(function(link){return link["@type"] === "boardgameartist";}).map(function(c){return c["@value"];}).join(", ");
-/*
-    if(datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).length > 1)
-        document.getElementsByClassName("publisher")[0].innerText = "Editori: ";
-    else
-        document.getElementsByClassName("publisher")[0].innerText = "Editore: ";*/
-
-    document.getElementsByClassName("publisher")[0].innerText = " " + datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).map(function(c){return c["@value"];}).join(", ");
-
-    document.getElementsByClassName("player-count")[0].innerText = datiGioco.minplayers["@value"];
-
-    if(datiGioco.maxplayers["@value"] !== datiGioco.minplayers["@value"])
-        document.getElementsByClassName("player-count")[0].innerText += "-" + datiGioco.maxplayers["@value"];
-
-    document.getElementsByClassName("player-count")[0].innerText += " giocatori";
-
-    document.getElementsByClassName("length")[0].innerText = datiGioco.minplaytime["@value"];
-
-    if(datiGioco.maxplaytime["@value"] !== datiGioco.minplaytime["@value"])
-        document.getElementsByClassName("length")[0].innerText += "-" + datiGioco.maxplaytime["@value"];
-
-    document.getElementsByClassName("length")[0].innerText += " minuti";
-
-    document.getElementsByClassName("age")[0].innerText = datiGioco.minage["@value"] + "+";
-
-
-    document.getElementsByClassName("info-text")[0].innerText = infoInRiga(datiGioco);
-    
-    document.getElementsByClassName("game-url")[0].innerHTML = getURL(datiGioco, gameName);
-    document.getElementsByClassName("game-img")[0].innerHTML = getImage(datiGioco);
-
-
-/*
-    <h3 id=name>Nome gioco</h3>
-    <p>Autore: <span id=designer>Xxxxx Yyyyy</span></p>
-    <p>Illustratore: <span id=artist>Xxxxx Yyyyy</span></p>
-    <p>Editore: <span id=publisher>Zzzzzzz</span></p>
-    <p>Numero di giocatori: <span id=player-count>2-4</span></p>
-    <p>Durata: <span durata=length>30-60 min</span></p>
-    <p>Età: <span id=age>10+</span></p>
-    <p>Prezzo: <span id=price>9,99 €</span></p>*/
-    ValorizzaCode();
-}    
+ 
 
 function GiocoSelezionato()
 {        
     var selectGioco = document.getElementById('selectGioco');
     loadGioco(selectGioco.value);
 }
+
+
+
+var main = new Vue({
+    el: '#main',
+    data: {
+        gameName: "Nome gioco",
+        designer: ["designer"],
+        designerJoin: "designer",
+        artist: ["artist"],
+        artistJoin: "artist",
+        publisher: ["publisher"],
+        publisherJoin: "publisher",
+        minplayers: 0,
+        maxplayers: 100,
+        minplaytime: 0,
+        maxplaytime: 360,
+        minage: 0,
+        price: "xx €"
+    },
+    computed: {
+        infoInRiga: function(){                    
+            //es. Autori: Isaac Childres | Artisti: Alexandr Elichev, Josh T. McDowell, Alvaro Nebot | Giocatori: 1-4 | Durata: 60-120′ | Età: 14+ | Editore: Asmodee Italia
+         
+            let components = [];
+
+            if(this.designer.length > 0)
+            {
+                let stringa = "";
+
+                if(this.designer.length > 1)
+                    stringa += "Autori: ";
+                else
+                    stringa += "Autore: ";
+
+                stringa += this.designerJoin;
+
+                components.push(stringa)
+            }
+
+            if(this.artist.length > 0)
+            {
+                let stringa = "";
+
+                if(this.artist.length > 1)
+                    stringa += "Artisti: ";
+                else
+                    stringa += "Artista: ";
+
+                stringa += this.artistJoin;      
+                components.push(stringa)          
+            }
+
+            components.push("Giocatori: " + this.players);
+
+            components.push("Durata: " + this.playtime);
+
+            components.push("Età: " + this.minage + "+");
+
+            if(this.publisher.length > 0)
+            {
+                let stringa = "";
+
+                if(this.publisher.length > 1)
+                    stringa += "Editori: ";
+                else
+                    stringa += "Editore: ";
+
+                stringa += this.publisherJoin;      
+                components.push(stringa)          
+            }
+
+            return components.join(" | ");      
+        },
+        players: function(){
+            return this.minplayers + (this.minplayers !== this.maxplayers ? "-" + this.maxplayers : "");
+        },
+        playtime: function(){
+            return this.minplaytime + (this.minplaytime !== this.maxplaytime ? "-" + this.maxplaytime : "")
+        }
+    },
+    methods: { 
+        loadDummy: function(){
+            //todo
+
+        },
+        updateGioco: function(gameData)
+        {
+            json_datiGioco = xml2json(gameData).replace("undefined","");    
+            datiGioco = JSON.parse(json_datiGioco).items.item;
+
+            if(datiGioco.name["@value"] !== undefined)
+                this.gameName = datiGioco.name["@value"];
+            else
+                this.gameName = datiGioco.name.filter(function(n){ return n["@type"] == "primary"; })[0]["@value"];
+
+            this.designer = datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).map(function(c){return c["@value"];});            
+            this.designerJoin = this.designer.join(", ");
+            this.artist = datiGioco.link.filter(function(link){return link["@type"] === "boardgameartist";}).map(function(c){return c["@value"];});
+            this.artistJoin = this.artist.join(", ");
+            this.publisher = datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).map(function(c){return c["@value"];});
+            this.publisherJoin = this.publisher.join(", ");
+
+            this.minplayers = datiGioco.minplayers["@value"];
+            this.maxplayers = datiGioco.maxplayers["@value"];
+
+            this.minplaytime = datiGioco.minplaytime["@value"];
+            this.maxplaytime = datiGioco.maxplaytime["@value"];
+
+            this.minage = datiGioco.minage["@value"];
+
+            //document.getElementsByClassName("info-text")[0].innerText = infoInRiga(datiGioco);            
+            document.getElementsByClassName("game-url")[0].innerHTML = getURL(datiGioco, gameName);
+            document.getElementsByClassName("game-img")[0].innerHTML = getImage(datiGioco);
+
+            ValorizzaCode();
+        }   
+    },
+    beforeCreate: function(){
+        console.log("beforeCreate");
+    },
+    created: function(){
+        console.log("created");
+        console.log("end created");
+    },
+    mounted: function(){
+        console.log("mounted");
+        //after all loaded
+        this.$nextTick(function() {
+            console.log("nextTick");
+            console.log("end nextTick");
+        });
+    }
+});
+
+Vue.directive('visible', (el, bind) => {
+    el.style.visibility=(!!bind.value) ? 'visible' : 'hidden';});
 
 
 
