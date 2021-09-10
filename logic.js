@@ -37,7 +37,7 @@ function loadGioco(id) {
     xhrDetail.send();
 }
 
-function infoInRiga(data)
+function infoInRiga(datiGioco)
 {
     //es. Autori: Isaac Childres | Artisti: Alexandr Elichev, Josh T. McDowell, Alvaro Nebot | Giocatori: 1-4 | Durata: 60-120′ | Età: 14+ | Editore: Asmodee Italia
  
@@ -97,6 +97,24 @@ function infoInRiga(data)
     return stringa;
 }
 
+function getURL(datiGioco)
+{
+    stringa = "<a href=https://boardgamegeek.com/boardgame/" + datiGioco["@id"] +  " targe=_blank>" + datiGioco.name["@value"] + "</a>";
+ 
+    return stringa;
+}
+
+function getImage(datiGioco)
+{
+    stringa = "<img href=" + datiGioco["thumbnail"] + " />";
+
+    stringa += "<img href=" + datiGioco["image"] + " />";
+ 
+    return stringa;
+}
+
+
+
 function updateGioco(data)
 {
     json_datiGioco = xml2json(data).replace("undefined","");    
@@ -145,8 +163,10 @@ function updateGioco(data)
     document.getElementsByClassName("age")[0].innerText = datiGioco.minage["@value"] + "+";
 
 
-    document.getElementsByClassName("info-text")[0].innerText = infoInRiga(data);
+    document.getElementsByClassName("info-text")[0].innerText = infoInRiga(datiGioco);
     
+    document.getElementsByClassName("game-url")[0].innerHTML = getURL(datiGioco);
+    document.getElementsByClassName("game-img")[0].innerHTML = getImage(datiGioco);
 
 
 /*
