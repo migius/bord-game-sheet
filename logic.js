@@ -99,16 +99,16 @@ function infoInRiga(datiGioco)
 
 function getURL(datiGioco)
 {
-    stringa = "<a href=https://boardgamegeek.com/boardgame/" + datiGioco["@id"] +  " targe=_blank>" + datiGioco.name["@value"] + "</a>";
+    stringa = "<a href=https://boardgamegeek.com/boardgame/" + datiGioco["@id"] +  " target=_blank>" + datiGioco.name["@value"] + "</a>";
  
     return stringa;
 }
 
 function getImage(datiGioco)
 {
-    stringa = "<img href=" + datiGioco["thumbnail"] + " />";
+    stringa = "<img href='" + datiGioco["thumbnail"] + "' />";
 
-    stringa += "<img href=" + datiGioco["image"] + " />";
+    stringa += "<img href='" + datiGioco["image"] + "' />";
  
     return stringa;
 }
