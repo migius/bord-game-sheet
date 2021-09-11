@@ -29,10 +29,15 @@
     </form>
 
     <h2>Link al gioco</h2>
-    <div class="game-url"></div>
+    <div class="game-url">
+        <a :href="'https://boardgamegeek.com/boardgame/' + id" target=_blank>{{gameName}}</a>
+    </div>
 
     <h2>Immagini</h2>
-    <div class="game-img"></div>
+    <div class="game-img">
+        <img src='" + datiGioco["thumbnail"] + "' />
+        <img src='" + datiGioco["image"] + "' />
+    </div>
 
     <h2>Anteprima</h2>
     <div class="preview-box">
