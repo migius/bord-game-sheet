@@ -143,10 +143,8 @@ var main = new Vue({
                 "&a=" + this.designerJoin + 
                 "&i=" + this.artistJoin + 
                 "&e=" + this.publisherJoin + 
-                "&m=" + this.minplayers + 
-                "&x=" + this.maxplayers + 
-                "&n=" + this.minplaytime + 
-                "&y=" + this.maxplaytime + 
+                "&m=" + this.players + 
+                "&n=" + this.playtime +
                 "&l=" + this.minage + 
                 "&p=" + this.price;
         }
