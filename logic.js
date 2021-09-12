@@ -136,6 +136,11 @@ var main = new Vue({
         },
         playtime: function(){
             return this.minplaytime + (this.minplaytime !== this.maxplaytime ? "-" + this.maxplaytime : "")
+        },
+        sheetImage: function(){
+            return "https://geek.pizza/telegram/@PizzaMeepleBot/Images/schedagioco/?" + 
+                "t=" + this.gameName + 
+                "&a=" + this.designerJoin;
         }
     },
     methods: { 
