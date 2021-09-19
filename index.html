@@ -25,19 +25,20 @@
         Massimo durata: <input type="number" v-model="maxplaytime" /><br/>
         Minimo età: <input type="number" v-model="minage" /><br/>
         Editore: <input type="text" v-model="publisherJoin" /><br/>
-        Prezzo: <input type="text" v-model="price" />
+        Prezzo: <input type="text" v-model="price" placeholder="lascia la casella vuota per non inserire il campo" />
     </form>
 
     <h2>Link al gioco</h2>
     <div class="game-url">
         <a :href="'https://boardgamegeek.com/boardgame/' + id" target=_blank>{{gameName}}</a>
+        <a :href="'https://magicmerchant.it/search/?q=' + gameName + '&selected_facets=category%3AGiochi+da+Tavolo'" target=_blank>Cerca {{gameName}} su MagicMerchant.it</a> 
     </div>
 
     <h2>Immagini</h2>
     <div class="game-img">
+        <img :src='sheetImage' /> <br/>
         <img :src='thumbnail' /> <br/>
         <img :src='image' /> <br/>
-        <img :src='sheetImage' /> <br/>
     </div>
 
 <!--

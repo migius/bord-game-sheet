@@ -73,7 +73,7 @@ var main = new Vue({
         minplaytime: 0,
         maxplaytime: 360,
         minage: 0,
-        price: "xx €",
+        price: "",
         thumbnail: "",
         image: "",
     },
@@ -139,14 +139,14 @@ var main = new Vue({
         },
         sheetImage: function(){
             return "https://geek.pizza/telegram/@PizzaMeepleBot/Images/schedagioco/?" + 
-                "t=" + encodeURI(this.gameName) + 
-                "&a=" + encodeURI(this.designerJoin) + 
-                "&i=" + encodeURI(this.artistJoin) + 
-                "&e=" + encodeURI(this.publisherJoin) + 
+                "t=" + encodeURIComponent(this.gameName) + 
+                "&a=" + encodeURIComponent(this.designerJoin) + 
+                "&i=" + encodeURIComponent(this.artistJoin) + 
+                "&e=" + encodeURIComponent(this.publisherJoin) + 
                 "&m=" + this.players + 
                 "&n=" + this.playtime +
                 "&l=" + this.minage + 
-                "&p=" + this.price;
+                "&p=" + this.price; 
         }
     },
     methods: { 
