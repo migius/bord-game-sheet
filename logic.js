@@ -76,7 +76,7 @@ var main = new Vue({
         price: "",
         thumbnail: "",
         image: "",
-        use_thumbnail: true;
+        use_thumbnail: true
     },
     computed: {
         infoInRiga: function(){                    
