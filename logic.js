@@ -139,10 +139,10 @@ var main = new Vue({
         },
         sheetImage: function(){
             return "https://geek.pizza/telegram/@PizzaMeepleBot/Images/schedagioco/?" + 
-                "t=" + this.gameName + 
-                "&a=" + this.designerJoin + 
-                "&i=" + this.artistJoin + 
-                "&e=" + this.publisherJoin + 
+                "t=" + encodeURI(this.gameName) + 
+                "&a=" + encodeURI(this.designerJoin) + 
+                "&i=" + encodeURI(this.artistJoin) + 
+                "&e=" + encodeURI(this.publisherJoin) + 
                 "&m=" + this.players + 
                 "&n=" + this.playtime +
                 "&l=" + this.minage + 
