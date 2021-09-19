@@ -75,8 +75,7 @@ var main = new Vue({
         minage: 0,
         price: "",
         thumbnail: "",
-        image: "",
-        use_thumbnail: true
+        image: ""
     },
     computed: {
         infoInRiga: function(){                    
@@ -148,7 +147,7 @@ var main = new Vue({
                 "&n=" + this.playtime +
                 "&l=" + this.minage + 
                 "&p=" + this.price + 
-                "&j=" + (this.use_thumbnail ? this.thumbnail : ""); 
+                "&j=" + this.use_thumbnail; 
         }
     },
     methods: { 
