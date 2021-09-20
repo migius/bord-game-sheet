@@ -75,6 +75,7 @@ var main = new Vue({
         minage: 0,
         price: "",
         thumbnail: "",
+        thumbnail_static: "",
         image: ""
     },
     computed: {
@@ -182,6 +183,7 @@ var main = new Vue({
 
 
             this.thumbnail = datiGioco["thumbnail"];
+            this.thumbnail_static = datiGioco["thumbnail"];
 
             this.image = datiGioco["image"];
 
