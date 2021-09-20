@@ -148,7 +148,7 @@ var main = new Vue({
                 "&n=" + this.playtime +
                 "&l=" + this.minage + 
                 "&p=" + this.price + 
-                "&j=" + this.use_thumbnail; 
+                "&j=" + this.thumbnail; 
         }
     },
     methods: { 
