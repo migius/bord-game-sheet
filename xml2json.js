@@ -84,7 +84,7 @@ function xml2json(xml, tab) {
             json += (name?":{":"{") + (arr.length > 1 ? ("\n"+ind+"\t"+arr.join(",\n"+ind+"\t")+"\n"+ind) : arr.join("")) + "}";
          }
          else if (typeof(o) == "string")
-            json += (name&&":") + "\"" + o.toString() + "\"";
+            json += (name&&":") + "\"" + o.toString().replaceAll('"', '\\\"') + "\"";
          else
             json += (name&&":") + o.toString();
          return json;
