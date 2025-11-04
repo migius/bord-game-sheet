@@ -284,7 +284,7 @@ function loadGiochi() {
     
     if(stringaGioco.length < 3) return;
 
-    url = "https://geekpizza.altervista.org/@PizzaMeepleBot/Functions/serarch.php?query=";
+    url = "https://geekpizza.altervista.org/@PizzaMeepleBot/Functions/search.php?query=";
     //difficolta
     url += encodeURI(stringaGioco);
 
