@@ -29,7 +29,7 @@ function loadGioco(id) {
     // Create and send a GET request
     // The first argument is the post type (GET, POST, PUT, DELETE, etc.)
     // The second argument is the endpoint URL
-    url = "https://api.geekdo.com/xmlapi2/thing?id=";
+    url = "https://geekpizza.altervista.org/@PizzaMeepleBot/Functions/dettaglio.php?id=";
     //difficolta
     url += encodeURI(id);
 
@@ -284,10 +284,7 @@ function loadGiochi() {
     
     if(stringaGioco.length < 3) return;
 
-    // Create and send a GET request
-    // The first argument is the post type (GET, POST, PUT, DELETE, etc.)
-    // The second argument is the endpoint URL
-    url = "https://api.geekdo.com/xmlapi2/search?type=boardgame&query=";
+    url = "https://geekpizza.altervista.org/@PizzaMeepleBot/Functions/serarch.php?query=";
     //difficolta
     url += encodeURI(stringaGioco);
 
