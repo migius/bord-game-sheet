@@ -186,7 +186,7 @@ var main = new Vue({
                 //document.getElementsByClassName("game-url")[0].innerHTML = getURL(datiGioco, gameName);
                 //document.getElementsByClassName("game-img")[0].innerHTML = getImage(datiGioco);
 
-                ValorizzaCode();
+                //ValorizzaCode();
 
             } catch (error) {
                 console.error("Errore nel parsing dei dati del gioco:", error);
