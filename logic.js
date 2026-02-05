@@ -162,8 +162,11 @@ var main = new Vue({
                 // Convert XML to JSON with better error handling
                 json_datiGioco = xml2json(gameData);
                 
-                // Remove "undefined" strings that might appear
-                json_datiGioco = json_datiGioco.replace(/undefined/g, '""');
+                // Remove "undefined" strings at the beginning
+                json_datiGioco = json_datiGioco.replace(/^undefined/g, '');
+                
+                // Remove undefined in the middle of the JSON
+                json_datiGioco = json_datiGioco.replace(/"undefined"/g, '""');
                 
                 // Also handle potential trailing commas that break JSON
                 json_datiGioco = json_datiGioco.replace(/,(\s*[}\]])/g, '$1');
