@@ -158,40 +158,63 @@ var main = new Vue({
         },
         updateGioco: function(gameData)
         {
-            json_datiGioco = xml2json(gameData).replace("undefined","");    
-            datiGioco = JSON.parse(json_datiGioco).items.item;
+            try {
+                // Convert XML to JSON with better error handling
+                json_datiGioco = xml2json(gameData);
+                
+                // Remove "undefined" strings that might appear
+                json_datiGioco = json_datiGioco.replace(/undefined/g, '""');
+                
+                // Also handle potential trailing commas that break JSON
+                json_datiGioco = json_datiGioco.replace(/,(\s*[}\]])/g, '$1');
+                
+                console.log("JSON string:", json_datiGioco);
+                
+                datiGioco = JSON.parse(json_datiGioco).items.item;
+                
+                // Handle game name - check if it's an array or object
+                if (Array.isArray(datiGioco.name)) {
+                    // If it's an array, find the primary name
+                    var primaryName = datiGioco.name.find(function(n){ return n["@type"] == "primary"; });
+                    this.gameName = primaryName ? primaryName["@value"] : datiGioco.name[0]["@value"];
+                } else if (datiGioco.name && datiGioco.name["@value"]) {
+                    // If it's a single object with @value
+                    this.gameName = datiGioco.name["@value"];
+                } else {
+                    this.gameName = "Nome non disponibile";
+                }
 
-            if(datiGioco.name["@value"] !== undefined)
-                this.gameName = datiGioco.name["@value"];
-            else
-                this.gameName = datiGioco.name.filter(function(n){ return n["@type"] == "primary"; })[0]["@value"];
+                // Handle links - ensure it's always an array
+                var links = Array.isArray(datiGioco.link) ? datiGioco.link : [datiGioco.link];
+                
+                this.designer = links.filter(function(link){return link && link["@type"] === "boardgamedesigner";}).map(function(c){return c["@value"];});            
+                this.designerJoin = this.designer.join(", ");
+                
+                this.artist = links.filter(function(link){return link && link["@type"] === "boardgameartist";}).map(function(c){return c["@value"];});
+                this.artistJoin = this.artist.join(", ");
+                
+                this.publisher = links.filter(function(link){return link && link["@type"] === "boardgamepublisher";}).map(function(c){return c["@value"];});
+                this.publisherJoin = this.publisher.join(", ");
 
-            this.designer = datiGioco.link.filter(function(link){return link["@type"] === "boardgamedesigner";}).map(function(c){return c["@value"];});            
-            this.designerJoin = this.designer.join(", ");
-            this.artist = datiGioco.link.filter(function(link){return link["@type"] === "boardgameartist";}).map(function(c){return c["@value"];});
-            this.artistJoin = this.artist.join(", ");
-            this.publisher = datiGioco.link.filter(function(link){return link["@type"] === "boardgamepublisher";}).map(function(c){return c["@value"];});
-            this.publisherJoin = this.publisher.join(", ");
+                this.minplayers = datiGioco.minplayers ? datiGioco.minplayers["@value"] : 0;
+                this.maxplayers = datiGioco.maxplayers ? datiGioco.maxplayers["@value"] : 0;
 
-            this.minplayers = datiGioco.minplayers["@value"];
-            this.maxplayers = datiGioco.maxplayers["@value"];
+                this.minplaytime = datiGioco.minplaytime ? datiGioco.minplaytime["@value"] : 0;
+                this.maxplaytime = datiGioco.maxplaytime ? datiGioco.maxplaytime["@value"] : 0;
 
-            this.minplaytime = datiGioco.minplaytime["@value"];
-            this.maxplaytime = datiGioco.maxplaytime["@value"];
+                this.minage = datiGioco.minage ? datiGioco.minage["@value"] : 0;
 
-            this.minage = datiGioco.minage["@value"];
+                this.thumbnail = datiGioco["thumbnail"] || "";
+                this.thumbnail_static = datiGioco["thumbnail"] || "";
+                this.image = datiGioco["image"] || "";
 
-
-            this.thumbnail = datiGioco["thumbnail"];
-            this.thumbnail_static = datiGioco["thumbnail"];
-
-            this.image = datiGioco["image"];
-
-            //document.getElementsByClassName("info-text")[0].innerText = infoInRiga(datiGioco);            
-            //document.getElementsByClassName("game-url")[0].innerHTML = getURL(datiGioco, gameName);
-            //document.getElementsByClassName("game-img")[0].innerHTML = getImage(datiGioco);
-
-            ValorizzaCode();
+                ValorizzaCode();
+                
+            } catch (error) {
+                console.error("Errore nel parsing dei dati del gioco:", error);
+                console.error("JSON problematico:", json_datiGioco);
+                alert("Errore nel caricamento dei dati del gioco. Controlla la console per dettagli.");
+            }
         }   
     },
     beforeCreate: function(){
@@ -338,11 +361,3 @@ function ValorizzaCode() {
     var escapedStr = nodeToString(document.getElementsByClassName("game-box")[0]);//.replace( "<" , "&lt;" ).replace( ">" , "&gt;");
     document.getElementById("code").value = escapedStr;
 }
-
-
-
-
-
-
-
-
