@@ -153,7 +153,8 @@ var main = new Vue({
         },
         updateGioco: function (gameData) {
             try {
-                json_datiGioco = xml2json(gameData).replace("undefined", "").replace(/\\\\"/g, '"');
+                gameData.querySelector('description').setHTMLUnsafe(gameData.querySelector('description').innerHTML.replaceAll("\"", "'"));
+                json_datiGioco = xml2json(gameData).replace("undefined", "");
                 datiGioco = JSON.parse(json_datiGioco).items.item;
 
                 if (datiGioco.name["@value"] !== undefined)
